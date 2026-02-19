@@ -37,16 +37,14 @@
   <button class="btn" onclick="connectDeriv()">Connect with Deriv</button>
 
   <script>
-    // Your numeric App ID from Deriv dashboard
-    const APP_ID = 127868;
-
-    // Redirect page (must exist in your repo)
-    const REDIRECT_URI = 'https://summittraders.github.io/summittraders-site/redirect.html';
+    const APP_ID = 127868; // Your new App ID
+    const REDIRECT_URI = 'https://summittraders.github.io/summittraders-site/callback.html';
 
     function connectDeriv() {
-      // Add redirect_uri & scopes
       const oauthUrl = `https://oauth.deriv.com/oauth2/authorize?app_id=${APP_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=read,trade,balance,portfolio`;
-      window.location.href = oauthUrl;
+
+      // Open OAuth URL in external browser (avoids Google disallowed_useragent)
+      window.open(oauthUrl, '_blank');
     }
   </script>
 
