@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Connecting...</title>
+  <style>
+    body { font-family:sans-serif; background:#0f1117; color:#e2e8f0; text-align:center; padding:100px 20px; }
+    h1 { color:#00c853; }
+    p { font-size:1.4rem; margin:2rem 0; }
+  </style>
+</head>
+<body>
+
+  <h1>Connecting to Summit Traders...</h1>
+  <p id="status">Waiting for Deriv authorization...</p>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    let accounts = [];
+
+    for (let [key, value] of params.entries()) {
+      if (key.startsWith('acct')) {
+        const [loginid, token] = value.split(':');
+        accounts.push({ loginid, token });
+      }
+    }
+
+    if (accounts.length > 0) {
+      localStorage.setItem('deriv_accounts', JSON.stringify(accounts));
+      document.getElementById('status').innerHTML = 
+        `Success!<br>Connected ${accounts.length} Deriv account(s).<br><br>` +
+        `Login IDs: ${accounts.map(a => a.loginid).join(', ')}<br>` +
+        `Redirecting back to main page...`;
+      setTimeout(() => { window.location.href = 'index.html'; }, 4000);
+    } else {
+      document.getElementById('status').innerHTML = 
+        `No tokens received.<br><br>` +
+        `Possible issue: redirect URL in Deriv dashboard must match exactly.<br>` +
+        `Current redirect: https://summittraders.com/callback<br>` +
+        `Try again or check app settings.`;
+    }
+  </script>
+
+</body>
+</html>

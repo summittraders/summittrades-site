@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Deriv Redirect</title>
+</head>
+<body>
+  <h2>Processing Deriv Login...</h2>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token1');
+    const account = params.get('acct1');
+
+    if(token && account){
+      alert(`Connected! Account: ${account}`);
+      localStorage.setItem('deriv_token', token);
+      localStorage.setItem('deriv_account', account);
+      window.location.href = 'index.html';
+    } else {
+      alert('Login failed. Please try again.');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
